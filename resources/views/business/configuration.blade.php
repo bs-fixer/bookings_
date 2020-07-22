@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>This is the new one</h1>
+<h1>New UPDATED Heading</h1>
 <div class="pd-ltr-20 xs-pd-20-10">
 	@if(Session::has('message'))
 	<p class="alert {{ Session::get('alert-class', 'alert-info') }}  alert-dismissible fade show">{{ Session::get('message') }}
