@@ -1,3 +1,4 @@
+@include('notification.message')
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,10 @@
 	@include('includes_template.header')
 	@include('includes_template.sidebar')
 	<div class="main-container">
-		@yield('content')
+		<div class="pd-ltr-20 xs-pd-20-10">
+			@yield('message')
+			@yield('content')
+		</div>
 	</div>
 	@include('includes_template.script')
 	<script src="{{ url('/') }}/src/plugins/apexcharts/apexcharts.min.js"></script>

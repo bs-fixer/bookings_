@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Business;
 use App\Service;
 use Illuminate\Http\Request;
@@ -17,8 +18,7 @@ class ServiceController extends Controller
     {   
         $business = Business::find($id);
         $business->services;
-        
-        return view('services.services' , [ 'services' => $business['services'] , 'business_id' => $id ]);
+        return view('service.index' , [ 'services' => $business['services'] , 'business_id' => $id ]);
     }
 
     /**
@@ -28,7 +28,7 @@ class ServiceController extends Controller
      */
     public function create($business_id)
     {   
-        return view('services.create_services',['business_id' => $business_id ]);
+        return view('service.create',['business_id' => $business_id ]);
     }
 
     /**
@@ -39,7 +39,6 @@ class ServiceController extends Controller
      */
     public function store(Request $request )
     {
-        
         $validate = $request->validate([
             'business_id' => 'required',
             'name'        => 'required'
@@ -48,7 +47,7 @@ class ServiceController extends Controller
         $serviceObj->save();
         Session::flash('message', 'Successfully Added..!'); 
         Session::flash('alert-class', 'alert-success'); 
-        return redirect()->route('services',['business_id' => request('business_id')]);
+        return redirect()->route('business.service.index',['business_id' => request('business_id')]);
     }
 
     /**
@@ -71,7 +70,7 @@ class ServiceController extends Controller
     public function edit($business_id , $service_id)
     {
         $service = Service::find($service_id);
-        return view('services.edit' , ['service' => $service , 'business_id' => $business_id ,'service_id' => $service_id ]);
+        return view('service.edit' , ['service' => $service , 'business_id' => $business_id ,'service_id' => $service_id ]);
     }
 
     /**
@@ -87,9 +86,9 @@ class ServiceController extends Controller
         $service->name = request('name');
         $service->update();
         
-        Session::flash('updated_services_message', 'Successfully Updated..!'); 
+        Session::flash('message', 'Successfully Updated..!'); 
         Session::flash('alert-class', 'alert-success'); 
-        return redirect()->route('services' , ['business_id' => $business_id , 'service_id' => $service_id ]);
+        return redirect()->route('business.service.index' , ['business_id' => $business_id , 'service_id' => $service_id ]);
     }
 
     /**
@@ -104,7 +103,7 @@ class ServiceController extends Controller
         $business = $service->business['id'];
         if( $business_id  == $business ){
             $service->delete();
-            return redirect()->route('services', ['business_id' => $business_id]);
+            return redirect()->route('business.service.index', ['business_id' => $business_id]);
         }
         return $service;
         

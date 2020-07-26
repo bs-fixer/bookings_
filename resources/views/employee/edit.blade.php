@@ -1,15 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="pd-ltr-20 xs-pd-20-10">
+<!-- <div class="pd-ltr-20 xs-pd-20-10"> -->
 	<div class="form_wrapper">
-		<form method="POST" action="{{ route('updateEmployee' , ['business_id' => $business_id , 'employee_id' => $employee_id]) }}">
+
+		{!! Form::open([ 'route' => ['employee.update' , $business_id, $employee_id ]]) !!}
+			<div class="form-group row">
+				{{ Form::label('business_id', 'Business Id', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
+				<div class="col-sm-12 col-md-10">
+					{{ Form::text('business_id', $business_id, ['class' => 'form-control']) }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				{{ Form::label('employee_name', 'Employee Name', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
+				<div class="col-sm-12 col-md-10">
+					{{ Form::text('name', '', ['class' => 'form-control']) }}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-12 col-md-2 col-form-label">Select Services</label>
+				
+				<div class="col-sm-12 col-md-10">
+					<select name="services[]" class="custom-select2 form-control select2-hidden-accessible" multiple="" style="width: 100%;" tabindex="-1" aria-hidden="true">
+						<optgroup label="services">
+							@foreach($services_list as $key => $sl)
+								<option value="{{ $sl->id }}" {{ (in_array($sl->id , $services)) ? 'selected' : '' }}>{{ $sl->name }}</option>
+							@endforeach						
+						</optgroup>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				{{ Form::submit('Update' , ['class' => 'btn btn-primary'])}}
+			</div>
+		{!! Form::close() !!}
+
+		<form method="POST" action="{{ route('employee.update' , ['business_id' => $business_id , 'employee_id' => $employee_id]) }}">
 			@csrf
 			@method('PUT')
 			<div class="form-group row">
 				<label class="col-sm-12 col-md-2 col-form-label">Business Id</label>
 				<div class="col-sm-12 col-md-10">
-					<input class="form-control" type="text" value="{{ $employee_id }}" name="business_id">
+					<input class="form-control" type="text" value="{{ $business_id }}" name="business_id">
 				</div>
 			</div>
 
@@ -81,5 +116,5 @@
 			</div>
 		</form>
 	</div>
-</div>
+<!-- </div> -->
 @endsection

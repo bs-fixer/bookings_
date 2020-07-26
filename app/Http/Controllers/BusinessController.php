@@ -12,23 +12,19 @@ class BusinessController extends Controller
 
     public function index(){
         $business_list = Business::all();
-        return view('business.business' , ['business_list' => $business_list ]);
+        return view('business.index' , ['business_list' => $business_list ]);
     }
 
-    public function create($page = 'configuration'){
+    public function create(){
         
-        if($page == 'addBusiness'){
-            $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-            return view('business.generalized', [ 'days' => $days]);
-        }
-        else if( $page == 'configuration'){
-            $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        	return view('business.configuration', [ 'days' => $days]);
-        }
-        else{
-            abort('402');
-        }
+        $days = ['default','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        return view('business.create', [ 'days' => $days]);
     }
+
+    public function show(){
+        //not in use
+    }
+
 
     public function store(){	
         
@@ -61,7 +57,7 @@ class BusinessController extends Controller
         $obj->save();
     	Session::flash('message', 'Successfully Added..!'); 
 		Session::flash('alert-class', 'alert-success'); 
-    	return redirect()->route('configuration');
+    	return redirect()->route('business.index');
     }
 
     public function edit($business_id){
@@ -98,7 +94,7 @@ class BusinessController extends Controller
 
         Session::flash('message', 'Successfully Updated..!'); 
         Session::flash('alert-class', 'alert-success'); 
-        return redirect()->route('Business');
+        return redirect()->route('business.index');
     }//update() ends
 
     public function destroy($business_id){
@@ -107,12 +103,12 @@ class BusinessController extends Controller
         if($del_business->delete()){
             Session::flash('message', 'Successfully Deleted..!'); 
             Session::flash('alert-class', 'alert-danger'); 
-            return redirect()->route('Business');       
+            return redirect()->route('business.index');       
         }
         else{
             Session::flash('message', 'Can not find..!'); 
             Session::flash('alert-class', 'alert-info'); 
-            return redirect()->route('Business');       
+            return redirect()->route('business.index');       
         }
     } //destroy() ends 
 

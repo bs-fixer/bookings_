@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="pd-ltr-20">
-<h1>Bakhtawar Shah</h1>
 			<div class="card-box pd-20 height-100-p mb-30">
 				<div class="row align-items-center">
 					<div class="col-md-4">

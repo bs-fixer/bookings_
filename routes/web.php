@@ -15,25 +15,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'BookingsController@index')->name('dashboard');
 
-Route::get('/business', 'BusinessController@index')->name('Business');
-Route::get('/business/configuration' , 'BusinessController@create')->name('configuration');
-Route::get('/business/{business_id}' , 'BusinessController@edit')->name('editBusiness');
-Route::put('/busines/{business_id}', 'BusinessController@update')->name('updateBusiness');
-Route::get('/business/{page}' , 'BusinessController@create')->name('addBusiness');
-Route::post('/business' , 'BusinessController@store');
-Route::delete('/business/{business_id}' , 'BusinessController@destroy')->name('deleteBusiness');
+// Route::get('/business', 'BusinessController@index')->name('business.index');
+//Route::get('/business/create' , 'BusinessController@create')->name('business.create');
+// Route::post('/business' , 'BusinessController@store')->name('business.store');
+// Route::get('/business/{business_id}/edit' , 'BusinessController@edit')->name('business.edit');
+// Route::put('/busines/{business_id}', 'BusinessController@update')->name('business.update');
+// Route::delete('/business/{business_id}' , 'BusinessController@destroy')->name('business.destroy');
 
-Route::get('/business/{business_id}/services', 'ServiceController@index')->name('services');
-Route::get('/business/{business_id}/service/add', 'ServiceController@create')->name('addService');
-Route::post('/business/{business_id}/services/add', 'ServiceController@store')->name('storeService');
-Route::get('/business/{business_id}/service/{service_id}', 'ServiceController@edit')->name('editService');
-Route::put('/business/{business_id}/service/{service_id}', 'ServiceController@update')->name('updateService');
-Route::delete('/business/{business_id}/services/{service_id}', 'ServiceController@destroy')->name('deleteService');
+Helper::routes( ['/business','/business/{business_id}/service'] );
 
-Route::get('/business/{business_id}/employee', 'EmployeeController@index')->name('employees');
-Route::get('/business/{business_id}/employee/add', 'EmployeeController@create')->name('addEmployee');
-Route::post('/business/{business_id}/employee/add', 'EmployeeController@store')->name('storeEmployee');
-Route::get('/business/{business_id}/employee/{employee_id}', 'EmployeeController@edit')
-		->name('editEmployee');
-Route::put('/business/{business_id}/employee/{employee_id}' , 'EmployeeController@update')->name('updateEmployee');
-Route::delete('/business/{business_id}/employee/{employee_id}', 'EmployeeController@destroy')->name('deleteEmployee');
+// Route::get('/business/{business_id}/service', 'ServiceController@index')->name('service.index');
+// Route::get('/business/{business_id}/service/create', 'ServiceController@create')->name('service.create');
+// Route::post('/business/{business_id}/service', 'ServiceController@store')->name('service.store');
+// Route::get('/business/{business_id}/service/{service_id}/edit', 'ServiceController@edit')->name('service.edit'); 
+// Route::put('/business/{business_id}/service/{service_id}', 'ServiceController@update')->name('service.update');
+// Route::delete('/business/{business_id}/service/{service_id}', 'ServiceController@destroy')->name('service.destroy');
+
+Route::get('/business/{business_id}/employee', 'EmployeeController@index')->name('employee.index');
+Route::get('/business/{business_id}/employee/create', 'EmployeeController@create')->name('employee.create');
+Route::post('/business/{business_id}/employee', 'EmployeeController@store')->name('employee.store');
+Route::get('/business/{business_id}/employee/{employee_id}/edit', 'EmployeeController@edit')
+		->name('employee.edit');
+Route::put('/business/{business_id}/employee/{employee_id}' , 'EmployeeController@update')->name('employee.update');
+Route::delete('/business/{business_id}/employee/{employee_id}', 'EmployeeController@destroy')->name('employee.destroy');
