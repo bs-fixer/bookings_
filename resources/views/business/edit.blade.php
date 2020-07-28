@@ -26,20 +26,14 @@
 								{{ Form::button('+', ['class' => 'btn btn-success addBtn'] ) }}
 								<div class="repeater-container">
 									@forelse( $working_hours[$day] as $v )
-										
-										<!-- <div class="repeater-fields repeater-to-clone">
-											{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
-											{{ Form::time('', $v['from'], ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]",  'name' => "working_hours[$day][from][]" ]) }}
-											{{ Form::time('', $v['to'], ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]",  'name' => "working_hours[$day][to][]" ]) }}
-										</div> -->
-										
-										{{ Helper::wrapHtml('repeater_edit_field' , [ 'from_value' => $v['from'], 'to_value' => $v['to'], 'from_name' => "$working_hours[$day][from][]", 'to_name' => "$working_hours[$day][to][]" ]) }}
+											{!! Helper::wrapHtml('repeater_edit_field' , [ 'from_value' => $v['from'], 'to_value' => $v['to'], 'from_name' => "working_hours[$day][from][]", 'to_name' => "working_hours[$day][to][]" ]) !!}
 										@empty 
-										<div class="repeater-fields repeater-to-clone">
+										<!-- <div class="repeater-fields repeater-to-clone">
 											{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
 											{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]) }}
 											{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]"]) }}
-										</div>
+										</div> -->
+										{!! Helper::wrapHtml('repeater_edit_field' , [ 'from_value' => $v['from'], 'to_value' => $v['to'], 'from_name' => "", 'to_name' => "" ]) !!}
 									@endforelse
 								</div>
 							</div> <!-- repeater wrap ends -->
