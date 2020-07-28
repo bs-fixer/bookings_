@@ -17,9 +17,7 @@
 				</div>
 			</div>	
 			
-			<div class="form-group row">
-				{{ Form::button('Add Service',['type'=>'submit','class' => 'btn btn-primary'] )  }}
-			</div>
+			{!! Helper::wrapHtml('button_field', ['name'=>'Add Service']) !!}	
 		{!! Form::close() !!}
 	</div>
 @endsection

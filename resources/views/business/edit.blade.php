@@ -6,19 +6,9 @@
 	<div class="form_wrapper">
 
 		{!! Form::open([ 'route' => ['business.update', $business->id ], 'method' => 'PUT']) !!}
-			<div class="form-group row">
-				{{ Form::label('title', 'Title', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}	
-				<div class="col-sm-12 col-md-10">
-					{{ Form::text('title', $business->title, ['value' => $business->title ,'class' => 'form-control']) }}
-				</div>
-			</div>
 
-			<div class="form-group row">
-				{{ Form::label('description', 'Description', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
-				<div class="col-sm-12 col-md-10">
-					{!! Form::textarea('description', $business->description, ['class'=>'form-control']) !!}
-				</div>
-			</div>
+			{!! Helper::wrapHtml('text_field', ['name'=>'title', 'label'=>'Title', 'value'=>$business->title ]) !!}
+			{!! Helper::wrapHtml('textarea_field', ['name'=>'description', 'label'=>'Description', 'value'=>$business->description ]) !!}
 			
 			@foreach($days as $key => $day)
 				<div class="form-group dayName" data-day = "{{ $day }}">
@@ -33,16 +23,19 @@
 						<div class="col-sm-12 col-md-10">
 
 							<div class="repeater-wrap">
-								<button type='button' class="btn btn-success addBtn">+</button>	
+								{{ Form::button('+', ['class' => 'btn btn-success addBtn'] ) }}
 								<div class="repeater-container">
 									@forelse( $working_hours[$day] as $v )
-										<div class="repeater-fields">
+										
+										<!-- <div class="repeater-fields repeater-to-clone">
 											{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
 											{{ Form::time('', $v['from'], ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]",  'name' => "working_hours[$day][from][]" ]) }}
 											{{ Form::time('', $v['to'], ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]",  'name' => "working_hours[$day][to][]" ]) }}
-										</div>
+										</div> -->
+										
+										{{ Helper::wrapHtml('repeater_edit_field' , [ 'from_value' => $v['from'], 'to_value' => $v['to'], 'from_name' => "$working_hours[$day][from][]", 'to_name' => "$working_hours[$day][to][]" ]) }}
 										@empty 
-										<div class="repeater-fields">
+										<div class="repeater-fields repeater-to-clone">
 											{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
 											{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]) }}
 											{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]"]) }}
@@ -57,9 +50,7 @@
 				
 			@endforeach
 
-			<div class="form-group row">
-				{{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
-			</div>
+			{!! Helper::wrapHtml('button_field', ['name'=>'Update']) !!}
 		{!! Form::close() !!}
 
 	</div>

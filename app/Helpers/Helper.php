@@ -2,6 +2,7 @@
 namespace App\Helpers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
+use Form;
 class Helper
 {
     
@@ -90,6 +91,65 @@ public static function route($base, $args = []) {
     
 }
 
+
+public static function wrapHtml($group, $args = []){
+    switch($group) {
+        case 'text_field':
+            return '<div class="form-group row">'.
+                    Form::label($args['name'],$args['label'],['class' => 'col-sm-12 col-md-2 col-form-label']).
+                    '<div class="col-sm-12 col-md-10">'.
+                        Form::text($args['name'], $args['value'], ['class' => 'form-control']).
+                    '</div>
+                </div>';
+        break;
+
+        case 'select_field':
+            return '<div class="form-group row">'.
+                    Form::label($args['name'], $args['label'], ['class' => 'col-sm-12 col-md-2 col-form-label']).
+            '<div class="col-sm-12 col-md-10">'.
+                Form::select($args['name'], $args['values'] , $args['selected_value'] , ['class'=>'custom-select2 form-control select2-hidden-accessible' , 'style'=>'width:100%' , 'tabindex'=>'-1' , 'aria-hidden'=>'true' ,'multiple'=> 'true']).
+            '</div>
+        </div>';
+        break;
+
+        case 'textarea_field':
+            return '<div class="form-group row">'.
+                    Form::label($args['name'], $args['label'], ['class' => 'col-sm-12 col-md-2 col-form-label']).
+                    '<div class="col-sm-12 col-md-10">'.
+                        Form::textarea($args['name'], $args['value'], ['class'=>'form-control']).
+                    '</div>
+                </div>';
+        break;
+
+        case 'button_field':
+            return '<div class="form-group row">'.
+                        Form::button($args['name'],['type'=>'submit','class' => 'btn btn-primary'] ).
+                    '</div>';
+        break;
+
+        case 'repeater_field':
+            return '<div class="repeater-wrap">'.
+                    Form::button('+',['class' => 'btn btn-success addBtn'] ).
+                    '<div class="repeater-container">
+                        <div class="repeater-fields repeater-to-clone">'.
+                         $args['fields'].   
+                        '</div>
+                    </div>
+                </div>';
+        break;
+
+        case 'repeater_edit_field':
+            return '<div class="repeater-fields repeater-to-clone">'.
+                        Form::button('-',['class' => 'btn btn-danger removeBtn'] ).
+                        Form::time('', $args['from_value'], ['class' => 'col-md-5' , 'data-name' => $args['from_name'],  'name' => $args['from_name'] ]).
+                        Form::time('', $args['to_value'], ['class' => 'col-md-5' , 'data-name' => $args['to_name'],  'name' => $args['to_name'] ]).
+                    '</div>';
+        break;
+    }
+
+
+    
+}
 
 
 

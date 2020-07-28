@@ -19,7 +19,6 @@
 			            <td>{{ $bl->id }}</td>
 			            <td>{{ $bl->title }}</td>
 			            <td>
-			            	icon_route_url()
 			            	<a href="{{ route('business.edit' , ['business_id' => $bl->id]) }}" class="btn btn-success">
 			            		<i class="fa fa-pencil" aria-hidden="true"></i>
 							</a>

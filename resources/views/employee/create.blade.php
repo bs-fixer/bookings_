@@ -3,32 +3,10 @@
 @section('content')
 	<div class="form_wrapper">
 		{!! Form::open([ 'route' => ['employee.store' , $business_id ]]) !!}
-			<div class="form-group row">
-				{{ Form::label('business_id', 'Business Id', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
-				<div class="col-sm-12 col-md-10">
-					{{ Form::text('business_id', $business_id, ['class' => 'form-control']) }}
-				</div>
-			</div>
-
-			<div class="form-group row">
-				{{ Form::label('employee_name', 'Employee Name', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
-				<div class="col-sm-12 col-md-10">
-					{{ Form::text('name', '', ['placeholder'=>'Employee Name..','class' => 'form-control']) }}
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label class="col-sm-12 col-md-2 col-form-label">Select Services</label>
-				<div class="col-sm-12 col-md-10">
-					<select name="services" class="custom-select2 form-control select2-hidden-accessible" multiple="" style="width: 100%;" tabindex="-1" aria-hidden="true">
-						<optgroup label="services">
-							@foreach($services as $service)
-								<option value="{{ $service->id }}">{{ $service->name }}</option>
-							@endforeach						
-						</optgroup>
-					</select>
-				</div>
-			</div>
+			
+			{!! Helper::wrapHtml('text_field', ['name'=>'business_id', 'label'=>'Business Id', 'value'=>$business_id ]) !!}
+			{!! Helper::wrapHtml('text_field', ['name'=>'name', 'label'=>'Employee Name', 'value'=>'' ]) !!}
+			{!! Helper::wrapHtml('select_field', ['name'=>'services[]', 'label'=>'Select Services', 'values'=>$services , 'selected_value' => null ]) !!}
 
 			@foreach($days as $key => $day)
 				<div class="form-group dayName" data-day = "{{ $day }}">
@@ -42,24 +20,17 @@
 						</label>
 
 						<div class="col-sm-12 col-md-10">
-							<div class="repeater-wrap">
-								{{ Form::button('+',['class' => 'btn btn-success addBtn'] )  }}
-								<div class="repeater-container">
-									<div class="repeater-fields repeater-to-clone">
-										{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
-										{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]) }}
-										{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]" ]) }}
-									</div>
-								</div>
-							</div> <!-- repeater wrap ends -->
+							{!! Helper::wrapHtml('repeater_field', ['name'=>'', 'fields'=>
+								Form::button('-',['class' => 'btn btn-danger removeBtn'] ).
+								Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]).
+								Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]" ])
+							]) !!}
 						</div>
 					</div>
 				</div>
 			@endforeach
 
-			<div class="form-group row">
-				{{ Form::submit('Submit' , ['class' => 'btn btn-primary'])}}
-			</div>
+			{!! Helper::wrapHtml('button_field', ['name'=>'Add Emplooyee']) !!}
 		{!! Form::close() !!}
 	</div>
 @endsection

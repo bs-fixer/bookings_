@@ -6,6 +6,7 @@ use App\Business;
 use Illuminate\Http\Request;
 use Session;
 
+
 class EmployeeController extends Controller
 {
     public function index($business_id){
@@ -15,7 +16,11 @@ class EmployeeController extends Controller
     }
 
     public function create($business_id){
-        $services = Business::find($business_id)->services;
+        $services = Business::find($business_id)
+                            ->services
+                            ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+                            ->pluck('name', 'id');
+
         $days = ['default','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     	return view('employee.create', ['days' => $days , 'services' => $services , 'business_id' => $business_id] );
     }
@@ -38,9 +43,10 @@ class EmployeeController extends Controller
         $services      = $employee->services->pluck('id')->toArray();
         $days          = ['default', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
         $working_hours = $employee['working_hours'];
-        $services_list = Business::find($business_id); 
-        $services_list->services;
-        
+        $business_services = Business::find($business_id); 
+        $services_list = $business_services->services
+                      ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+                      ->pluck('name', 'id');
         // $keeper = [];
         // foreach($working_hours as $day => $hours ){
         //     foreach($working_hours[$day]['to'] as $i => $to){
@@ -48,7 +54,8 @@ class EmployeeController extends Controller
         //         $keeper[$day][$i]['from']  = $working_hours[$day]['from'][$i];
         //     }    
         // }
-        return view('employee.edit' , ['employee_id' => $employee_id , 'business_id' => $business_id , 'employee' => $employee , 'services' => $services , 'days' => $days , 'working_hours' => $working_hours , 'services_list' => $services_list['services']]);
+        
+        return view('employee.edit' , ['employee_id' => $employee_id , 'business_id' => $business_id , 'employee' => $employee , 'services' => $services , 'days' => $days , 'working_hours' => $working_hours , 'services_list' => $services_list]);
     } //edit ends
             
     public function update($business_id , $employee_id ){

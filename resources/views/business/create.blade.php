@@ -12,19 +12,9 @@
 	@endif
 	<div class="form_wrapper">
 		{!! Form::open([ 'route' => ['business.store']]) !!}
-			<div class="form-group row">
-				{{ Form::label('title', 'Title', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
-				<div class="col-sm-12 col-md-10">
-					{{ Form::text('title', Request::old('title'), ['placeholder' => 'Business Title.','class' => 'form-control']) }}
-				</div>
-			</div>
-
-			<div class="form-group row">
-				{{ Form::label('description', 'Description', ['class' => 'col-sm-12 col-md-2 col-form-label']) }}
-				<div class="col-sm-12 col-md-10">
-					{!! Form::textarea('description', null, ['class'=>'form-control']) !!}
-				</div>
-			</div>
+			
+			{!! Helper::wrapHtml('text_field', ['name'=>'title', 'label'=>'Title', 'value'=>'' ]) !!}
+			{!! Helper::wrapHtml('textarea_field', ['name'=>'description', 'label'=>'Description', 'value'=>'' ]) !!}
 
 			@foreach($days as $key => $day)
 				<div class="form-group dayName" data-day = "{{ $day }}">
@@ -38,24 +28,17 @@
 						</label>
 
 						<div class="col-sm-12 col-md-10">
-							<div class="repeater-wrap">
-								{{ Form::button('+',['class' => 'btn btn-success addBtn'] )  }}
-								<div class="repeater-container">
-									<div class="repeater-fields repeater-to-clone">
-										{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
-										{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]) }}
-										{{ Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]" ]) }}
-									</div>
-								</div>
-							</div> <!-- repeater wrap ends -->
+							{!! Helper::wrapHtml('repeater_field', ['name'=>'', 'fields'=>
+								Form::button('-',['class' => 'btn btn-danger removeBtn'] ).
+								Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]).
+								Form::time('', '', ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]" ])
+							]) !!}
 						</div>
 					</div>
 				</div>
 			@endforeach
 
-			<div class="form-group row">
-			{{ Form::submit('Add Business' , ['class' => 'btn btn-primary'])}}
-			</div>
+			{!! Helper::wrapHtml('button_field', ['name'=>'Add Business']) !!}
 		{!! Form::close() !!}
 
 	</div>
