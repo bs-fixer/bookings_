@@ -19,13 +19,14 @@
 			@foreach($days as $key => $day)
 				<div class="form-group dayName" data-day = "{{ $day }}">
 					<div class="row">
-						<label class="col-sm-12 col-md-2 col-form-label">
+						<!-- <label class="col-sm-12 col-md-2 col-form-label">
 							{{ Form::checkbox("working_days[$day]", $day , ['class' => 'working_days']) }}
 							{{$day}}
 							<br>
 							{{ Form::checkbox("working_hours_check[$day]", $day , ['class' => 'working_hours_check']) }}
 							Working Hours
-						</label>
+						</label> -->
+						{!! Helper::wrapHtml('repeater_label' , [ 'working_days' => "working_days[$day]", 'working_hours' => "working_hours_check[$day]" , 'day' => $day]) !!}
 
 						<div class="col-sm-12 col-md-10">
 							{!! Helper::wrapHtml('repeater_field', ['name'=>'', 'fields'=>

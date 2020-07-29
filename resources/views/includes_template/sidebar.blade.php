@@ -32,9 +32,9 @@
 							<span class="micon dw dw-house-1"></span><span class="mtext">Services</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="{{ route('business.service.index' , ['business_id' => 3]) }}" class="dropdown-toggle no-arrow">Services
+							<li><a href="{{ route('business.service.index' , ['business_id' => 1]) }}" class="dropdown-toggle no-arrow">Services
 							</a></li>
-							<li><a href="{{ route('business.service.create' , ['business_id' => 3])}}">Add Service</a></li>
+							<li><a href="{{ route('business.service.create' , ['business_id' => 1])}}">Add Service</a></li>
 						</ul>
 					</li>
 
@@ -43,9 +43,9 @@
 							<span class="micon dw dw-house-1"></span><span class="mtext">Employees</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="{{ route('employee.index' , ['business_id' => 3]) }}" class="dropdown-toggle no-arrow">Employees
+							<li><a href="{{ route('employee.index' , ['business_id' => 1]) }}" class="dropdown-toggle no-arrow">Employees
 						</a></li>
-							<li><a href="{{ route('employee.create' , ['business_id' => 3] )}}">Add Employee</a></li>
+							<li><a href="{{ route('employee.create' , ['business_id' => 1] )}}">Add Employee</a></li>
 						</ul>
 					</li>
 

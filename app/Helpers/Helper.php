@@ -139,11 +139,62 @@ public static function wrapHtml($group, $args = []){
         break;
 
         case 'repeater_edit_field':
-            return '<div class="repeater-fields repeater-to-clone">'.
+            return '<div class="repeater-fields">'.
                         Form::button('-',['class' => 'btn btn-danger removeBtn'] ).
                         Form::time('', $args['from_value'], ['class' => 'col-md-5' , 'data-name' => $args['from_name'],  'name' => $args['from_name'] ]).
                         Form::time('', $args['to_value'], ['class' => 'col-md-5' , 'data-name' => $args['to_name'],  'name' => $args['to_name'] ]).
                     '</div>';
+        break;
+
+        case 'repeater_label':
+            return '<label class="col-sm-12 col-md-2 col-form-label">'.
+                    Form::checkbox($args['working_days'], $args['day'] , ['class' => 'working_days']).
+                    $args['day'].
+                    '<br>'.
+                    Form::checkbox($args['working_hours'], $args['day'] , ['class' => 'working_hours_check']).
+                    'Working Hours
+                </label>';
+        break;
+
+        case 'table':
+            $div = '
+                <table class="myTable display">
+                    <thead>
+                        <tr>';
+                            foreach($args['th'] as $heading){
+                                $div.='<th>'.$heading.'</th>';
+                            }
+                        $div.='</tr>
+                    </thead>
+                    <tbody>';
+                        foreach( $args['tbody_record'] as $key => $tb_rec ){
+                            $name = '';
+                            if($args['id'] == 'e'){ $name = $tb_rec->title; }else{ $name = $tb_rec->name; }
+                            $id = 0;
+                            if($args['id'] == 'e'){ $id = $tb_rec->id; }else{ $id = $args['id'];}
+                            $id2_check = '';
+                            if( $args['id2_name'] == 'e' ){
+                                $id2_check = '';
+                            }
+                            else{
+                                $id2_check = $tb_rec->id;
+                            }
+                            $div.='<tr>'.
+                                '<td>'.$tb_rec->id.'</td>'.
+                                '<td>'.$name.'</td>
+                                <td>'.
+                                    '<a href="'.route($args['edit'], [ $args['id1_name'] => $id, $id2_check ]).'" class="btn btn-success">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>'.
+                                    Form::open([ 'route' => [$args['destroy'],  $id , $tb_rec->id], 'method' => 'DELETE']).
+                                        Form::button('<i class="fa fa-trash-o"></i>',['class' => 'btn btn-danger', 'type' => 'submit']).
+                                    Form::close().
+                                '</td>
+                            </tr>';
+                        }
+                    $div.='</tbody>
+                </table>';
+            return $div;
         break;
     }
 

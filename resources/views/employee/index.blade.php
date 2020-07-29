@@ -2,7 +2,18 @@
 
 @section('content')
 	<div class="form_wrapper">
-		<table id="myTable" class="display">
+	{!! Helper::wrapHtml('table', 
+								['th'		   => ['Serial No.' , 'Name', 'Business ID',  'Modify'], 
+								'tbody_record' => $employees , 
+								'id' 		   => $business_id,
+								'id1_name'	   => 'business_id',
+								'id2_name'	   => 'e',
+								'edit'		   => 'employee.edit',
+								'destroy' 	   => 'employee.destroy'
+								]
+						) 
+	!!}
+		<!-- <table id="myTable" class="display">
 			<thead>
 				<tr>
 					<th>Serial No.</th>
@@ -29,6 +40,6 @@
 				</tr>
 				@endforeach
 			</tbody>
-		</table>
+		</table> -->
 	</div>
 @endsection

@@ -88,7 +88,8 @@ class ServiceController extends Controller
         
         Session::flash('message', 'Successfully Updated..!'); 
         Session::flash('alert-class', 'alert-success'); 
-        return redirect()->route('business.service.index' , ['business_id' => $business_id , 'service_id' => $service_id ]);
+        // return redirect()->route('business.service.index' , ['business_id' => $business_id , 'service_id' => $service_id ]);
+        return redirect()->route('business.service.index' , ['business_id' => $business_id ]);
     }
 
     /**

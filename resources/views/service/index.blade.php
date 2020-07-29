@@ -2,32 +2,35 @@
 
 @section('content')
 	<div class="form_wrapper">
-		<table id="myTable" class="display">
-		    <thead>
-		        <tr>
-		            <th>Serial No.</th>
-		            <th>Name</th>
-		            <th>Modify</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-
-		    	@foreach( $services as $service )
-		        <tr>
-		            <td>{{ $service->id }}</td>
-		            <td>{{ $service->name }}</td>
-		            <td>
-		            	<a href="{{ route('business.service.edit', ['business_id' => $business_id , 'service_id' => $service->id ]) }}" class="btn btn-success">
-		            		<i class="fa fa-pencil" aria-hidden="true"></i>
-						</a>
-
-						{!! Form::open([ 'route' => ['business.service.destroy', $business_id, $service->id], 'method' => 'DELETE']) !!}
-							{{ Form::button('<i class="fa fa-trash-o"></i>',['class' => 'btn btn-danger', 'type' => 'submit']) }}
-						{!! Form::close() !!}
-		            </td>
-		        </tr>
-		        @endforeach
-		    </tbody>
-		</table>
+	<?php 
+	// $yourarray = ['id', 'name', 'contact'];
+	// echo '<table class="myTable display">';
+	// 	echo '<tr>';
+	// 	foreach($yourarray as $row){
+			
+	// 		// foreach($row as $key => $cell){
+	// 			echo '<td>'.$row.'</td>';
+	// 		// }
+	// 	}
+	// 	echo '</tr>';
+	// 	$record = ['1','bakhtawar','0300'];
+	// 	echo '<tr>';
+	// 		foreach($record as $rec){
+	// 			echo '<td>'.$rec.'</td>';
+	// 		}
+	// 	echo '</tr>';
+	// echo '</table>';
+	?>
+		{!! Helper::wrapHtml('table',[
+										'th' 	  => ['serial No.' , 'Name', 'Modify'], 
+										'tbody_record' => $services , 
+									    'id' 	  => $business_id, 
+										'id1_name'=> 'business_id',
+										'id2_name'=> 'service_id',
+										'edit'	  => 'business.service.edit' , 
+										'destroy' => 'business.service.destroy',
+									]
+							) 
+		!!}
 	</div>
 @endsection

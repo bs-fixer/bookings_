@@ -85,3 +85,7 @@ jQuery(document).ready(function(){
 jQuery(document).ready( function () {
     jQuery('#myTable').DataTable();
 } );
+
+jQuery(document).ready( function () {
+    jQuery('.myTable').DataTable();
+} );

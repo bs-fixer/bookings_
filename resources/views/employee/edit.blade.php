@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="form_wrapper">
-		{!! Form::open([ 'route' => ['employee.update' , $business_id, $employee_id ]]) !!}
+		{!! Form::open([ 'route' => ['employee.update' , $business_id, $employee_id], 'method'=>'PUT']) !!}
 		
 			{!! Helper::wrapHtml('text_field', ['name'=>'business_id', 'label'=>'Business Id', 'value'=>$business_id ]) !!}
 			{!! Helper::wrapHtml('text_field', ['name'=>'name', 'label'=>'Employee Name', 'value'=>$employee->name ]) !!}
@@ -23,19 +23,24 @@
 								{{ Form::button('+',['class' => 'btn btn-success addBtn'] ) }}
 								
 								<div class="repeater-container">
+									
 									@forelse( $working_hours[$day]['from'] as $key => $from )
 										@php $to = $working_hours[$day]['to'][$key] @endphp
-										<div class="repeater-fields repeater-to-clone">
+										<!-- <div class="repeater-fields repeater-to-clone">
 											{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
 											{{ Form::time('', $from, ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]",  'name' => "working_hours[$day][from][]" ]) }}
 											{{ Form::time('', $to, ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]",  'name' => "working_hours[$day][to][]" ]) }}
-										</div>
+										</div> -->
+
+										{!! Helper::wrapHtml('repeater_edit_field' , [ 'from_value' => $from, 'to_value' => $to , 'from_name' => "working_hours[$day][from][]" , 'to_name' => "working_hours[$day][to][]"]) !!}
+										
 										@empty 
 										<div class="repeater-fields repeater-to-clone">
 											@php $to = $working_hours[$day]['to'][$key] @endphp
-											{{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
+											<!-- {{ Form::button('-',['class' => 'btn btn-danger removeBtn'] )  }}
 											{{ Form::time('', $from, ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][from][]" ]) }}
-											{{ Form::time('', $to, ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]"]) }}
+											{{ Form::time('', $to, ['class' => 'col-md-5' , 'data-name' => "working_hours[$day][to][]"]) }} -->
+											{!! Helper::wrapHtml('repeater_edit_field' , [ 'from_value' => $from, 'to_value' => $to ]) !!}
 										</div>
 									@endforelse
 								</div>
