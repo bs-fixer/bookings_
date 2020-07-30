@@ -27,11 +27,11 @@ class EmployeeController extends Controller
     }
 
     public function store(Request $request){
-        // dd(request()->all());
+        
     	$obj = new Employee(request(['business_id','name', 'working_days' , 'working_hours']));
     	$obj->save();
         $obj->services()->attach(request(['services']));
-// dd($obj);
+
     	Session::flash('message', 'Successfully Added..!'); 
         Session::flash('alert-class', 'alert-success'); 
     	return redirect()->route('employee.index',['business_id' => request('business_id')]);

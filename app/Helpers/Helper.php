@@ -156,53 +156,48 @@ public static function wrapHtml($group, $args = []){
                 </label>';
         break;
 
-        case 'table':
-            $div = '
-                <table class="myTable display">
-                    <thead>
-                        <tr>';
-                            foreach($args['th'] as $heading){
-                                $div.='<th>'.$heading.'</th>';
-                            }
-                        $div.='</tr>
-                    </thead>
-                    <tbody>';
-                        foreach( $args['tbody_record'] as $key => $tb_rec ){
-                            $name = '';
-                            if($args['id'] == 'e'){ $name = $tb_rec->title; }else{ $name = $tb_rec->name; }
-                            $id = 0;
-                            if($args['id'] == 'e'){ $id = $tb_rec->id; }else{ $id = $args['id'];}
-                            $id2_check = '';
-                            if( $args['id2_name'] == 'e' ){
-                                $id2_check = '';
-                            }
-                            else{
-                                $id2_check = $tb_rec->id;
-                            }
-                            $div.='<tr>'.
+        
+    } //switch() ends
+} //wrapHtml ends
+
+    public static function table( $args = [] ){
+        
+        $div = '';
+            $div.='<table id="myTable" class="display">
+				<thead>
+					<tr>';
+                        foreach($args['th'] as $heading){
+                            $div.='<th>'.$heading.'</th>';
+                        }
+					$div .= '</tr>
+				</thead>
+				<tbody>';
+					foreach( $args['tbody_record'] as $key => $tb_rec ){
+                        $name = '';
+                        ($args['for'] == 'business') ? $name = $tb_rec->title : $name = $tb_rec->name ;
+                        $div.='<tr>'.
                                 '<td>'.$tb_rec->id.'</td>'.
-                                '<td>'.$name.'</td>
-                                <td>'.
-                                    '<a href="'.route($args['edit'], [ $args['id1_name'] => $id, $id2_check ]).'" class="btn btn-success">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </a>'.
-                                    Form::open([ 'route' => [$args['destroy'],  $id , $tb_rec->id], 'method' => 'DELETE']).
-                                        Form::button('<i class="fa fa-trash-o"></i>',['class' => 'btn btn-danger', 'type' => 'submit']).
-                                    Form::close().
+                                '<td>'.$name.'</td>'.
+                                '<td>'.
+                                    $args['modify'].
                                 '</td>
                             </tr>';
-                        }
-                    $div.='</tbody>
-                </table>';
-            return $div;
-        break;
+                    }
+				$div.='</tbody>
+			</table>';
+        return $div;
     }
 
+    public static function modifyButton( $routeName = [] , $args = [] ){
+        $div = '';
+        $div .= '<a href="'.route($routeName['edit'] , [ $args['val1'] , $args['val2'] ] ).'" class="btn btn-success">'.
+            '<i class="fa fa-pencil" aria-hidden="true"></i>'.
+        '</a>'.
+        
+        Form::open([ 'route' => [$routeName['destroy'], $args['val1'], $args['val2'] ], 'method' => 'DELETE']).
+            Form::button('<i class="fa fa-trash-o"></i>',['class' => 'btn btn-danger', 'type' => 'submit']).
+        Form::close();
+        return $div;
+    } //modifyButton() ends here
 
-    
 }
-
-
-
-}
-?>
