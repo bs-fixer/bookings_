@@ -52,13 +52,9 @@
 								'th' 		    => ['Serial No.' , 'Name',  'Modify'],
 								'for'			=> 'employee',
 								'tbody_record'  => $employees,
-								'modify' 		=>  Helper::modifyButton( 
-															['edit' => 'employee.edit' , 'destroy' => 'employee.destroy'] , 
-															[ 
-																'val1'  => $business_id,
-																'val2'  => ''
-															] 
-														),
+								'business_id'	=> $business_id,
+								'edit'			=> 'employee.edit',
+								'destroy'		=> 'employee.destroy'
 		]) !!}
 	</div>
 @endsection

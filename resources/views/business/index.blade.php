@@ -47,13 +47,8 @@
 								'th' 		    => ['serial No.' , 'Name', 'Modify'],
 								'for'			=> 'business',
 								'tbody_record'  => $business_list,
-								'modify' 		=>  Helper::modifyButton( 
-															['edit' => 'business.edit' , 'destroy' => 'business.destroy'] , 
-															[ 
-																'val1'  => '',
-																'val2'  => ''
-															] 
-														),
+								'edit'			=> 'business.edit',
+								'destroy'		=> 'business.destroy',
 			]) !!}
 			
 		</div>

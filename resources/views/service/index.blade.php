@@ -8,13 +8,9 @@
 								'th' 		    => ['serial No.' , 'Name', 'Modify'],
 								'for'			=> 'service',
 								'tbody_record'  => $services,
-								'modify' 		=>  Helper::modifyButton( 
-															['edit' => 'business.service.edit' , 'destroy' => 'business.service.destroy'] , 
-															[ 
-																'val1'  => $business_id,
-																'val2'  => ''
-															] 
-														),
+								'business_id'	=> $business_id,
+								'edit'			=> 'business.service.edit',
+								'destroy'		=> 'business.service.destroy'
 			]) !!}
 	</div>
 @endsection

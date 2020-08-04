@@ -173,18 +173,37 @@ public static function wrapHtml($group, $args = []){
 				</thead>
 				<tbody>';
 					foreach( $args['tbody_record'] as $key => $tb_rec ){
-                        $name = '';
-                        ($args['for'] == 'business') ? $name = $tb_rec->title : $name = $tb_rec->name ;
+                        
+                        $name = ''; $val1 = 0;
+                        if($args['for'] == 'business') { 
+                            $name = $tb_rec->title; 
+                            $val1 = $tb_rec->id;
+                            $val2 = '';
+                        } 
+                        else{
+                            $name = $tb_rec->name ;
+                            $val1 = $args['business_id'];
+                            $val2 = $tb_rec->id;
+                        }
+                        
                         $div.='<tr>'.
                                 '<td>'.$tb_rec->id.'</td>'.
                                 '<td>'.$name.'</td>'.
                                 '<td>'.
-                                    $args['modify'].
+                                    
+                                    Helper::modifyButton( 
+                                        ['edit' => $args['edit'] , 'destroy' => $args['destroy']] , 
+                                        [ 
+                                            'val1'  => $val1,
+                                            'val2'  => $val2
+                                        ] 
+                                    ).
                                 '</td>
                             </tr>';
                     }
 				$div.='</tbody>
-			</table>';
+            </table>';
+                    
         return $div;
     }
 
