@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'BookingsController@index')->name('dashboard');
+Helper::routes( ['/bookings' , 'business/{business_id}/bookings'] );
 
 // Route::get('/business', 'BusinessController@index')->name('business.index');
 //Route::get('/business/create' , 'BusinessController@create')->name('business.create');

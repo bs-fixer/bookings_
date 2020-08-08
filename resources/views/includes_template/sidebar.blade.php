@@ -19,6 +19,16 @@
 					
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Bookings</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="{{ route('business.bookings.index' , ['business_id' => 1] ) }}">Booking</a></li>
+							<li><a href="{{ route('business.bookings.create' , ['business_id' => 1] ) }}">Add Booking</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Business</span>
 						</a>
 						<ul class="submenu">

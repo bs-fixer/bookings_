@@ -6,8 +6,9 @@
 		
 			{!! Helper::wrapHtml('text_field', ['name'=>'business_id', 'label'=>'Business Id', 'value'=>$business_id ]) !!}
 			{!! Helper::wrapHtml('text_field', ['name'=>'name', 'label'=>'Employee Name', 'value'=>$employee->name ]) !!}
-			{!! Helper::wrapHtml('select_field', ['name'=>'services[]', 'label'=>'Select Services', 'values'=>$services_list , 'selected_value' => $services ]) !!}
-			
+			{!! Helper::wrapHtml('select_field', ['name'=>'services[]', 'label'=>'Select Services', 'values'=>$services_list , 'selected_value' => $services , 'multiple' => 'multiple' ]) !!}
+			<!-- {!! Helper::wrapHtml('number_field', ['name'=>'slot', 'label'=>'Slot Duration', 'value'=> $slot ]) !!} -->
+			{!! Helper::wrapHtml('select_field', ['name'=>'slot', 'label'=>'Slot Duration', 'values'=> $time_slot, 'selected_value' => $slot, 'multiple' => 'false' ]) !!}
 			@foreach($days as $key => $day)
 				<div class="form-group dayName" data-day = "{{ $day }}">
 					<div class="row">

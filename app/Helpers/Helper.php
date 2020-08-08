@@ -7,7 +7,9 @@ class Helper
 {
     
 public static function routes($routes) {
+    
     foreach($routes as $key => $route) {
+        
         if (is_array($route)) {
             self::route($route[0], $route[1]);
         } else {
@@ -15,6 +17,7 @@ public static function routes($routes) {
         }
         self::route($route);
     }
+    
 }
 
 
@@ -25,6 +28,7 @@ public static function route($base, $args = []) {
     if (!isset($model)) {
         $model = end($parts);
     }
+    
     if (!isset($controller)) {
         $controller = ucwords($model).'Controller';
     }
@@ -37,6 +41,7 @@ public static function route($base, $args = []) {
             }
         }
     }
+    
     if (!isset($pages)) {
         $pages = ['index', 'create', 'show', 'store', 'edit', 'update', 'destroy'];
     }
@@ -103,11 +108,29 @@ public static function wrapHtml($group, $args = []){
                 </div>';
         break;
 
+        case 'datepicker_field':
+            return '<div class="form-group row">'.
+                        Form::label($args['name'],$args['label'],['class' => 'col-sm-12 col-md-2 col-form-label']).
+                        '<div class="col-sm-12 col-md-10">'.
+                        Form::text($args['name'], $args['value'], ['class' => 'form-control']).
+                        '</div>
+                    </div>';
+        break;
+
+        case 'number_field':
+            return '<div class="form-group row">'.
+                    Form::label($args['name'],$args['label'],['class' => 'col-sm-12 col-md-2 col-form-label']).
+                    '<div class="col-sm-12 col-md-10">'.
+                        Form::number($args['name'], $args['value'], ['class' => 'form-control', 'min' => 1 ]).
+                    '</div>
+                </div>';
+        break;
+
         case 'select_field':
             return '<div class="form-group row">'.
                     Form::label($args['name'], $args['label'], ['class' => 'col-sm-12 col-md-2 col-form-label']).
             '<div class="col-sm-12 col-md-10">'.
-                Form::select($args['name'], $args['values'] , $args['selected_value'] , ['class'=>'custom-select2 form-control select2-hidden-accessible' , 'style'=>'width:100%' , 'tabindex'=>'-1' , 'aria-hidden'=>'true' ,'multiple'=> 'true']).
+                Form::select($args['name'], $args['values'] , $args['selected_value'] , ['class'=>'custom-select2 form-control select2-hidden-accessible' , 'style'=>'width:100%' , 'tabindex'=>'-1' , 'aria-hidden'=>'true' ,$args['multiple']]).
             '</div>
         </div>';
         break;
@@ -160,52 +183,52 @@ public static function wrapHtml($group, $args = []){
     } //switch() ends
 } //wrapHtml ends
 
-    public static function table( $args = [] ){
+    // public static function table( $args = [] ){
         
-        $div = '';
-            $div.='<table id="myTable" class="display">
-				<thead>
-					<tr>';
-                        foreach($args['th'] as $heading){
-                            $div.='<th>'.$heading.'</th>';
-                        }
-					$div .= '</tr>
-				</thead>
-				<tbody>';
-					foreach( $args['tbody_record'] as $key => $tb_rec ){
+    //     $div = '';
+    //         $div.='<table id="myTable" class="display">
+	// 			<thead>
+	// 				<tr>';
+    //                     foreach($args['th'] as $heading){
+    //                         $div.='<th>'.$heading.'</th>';
+    //                     }
+	// 				$div .= '</tr>
+	// 			</thead>
+	// 			<tbody>';
+	// 				foreach( $args['tbody_record'] as $key => $tb_rec ){
                         
-                        $name = ''; $val1 = 0;
-                        if($args['for'] == 'business') { 
-                            $name = $tb_rec->title; 
-                            $val1 = $tb_rec->id;
-                            $val2 = '';
-                        } 
-                        else{
-                            $name = $tb_rec->name ;
-                            $val1 = $args['business_id'];
-                            $val2 = $tb_rec->id;
-                        }
+    //                     $name = ''; $val1 = 0;
+    //                     if($args['for'] == 'business') { 
+    //                         $name = $tb_rec->title; 
+    //                         $val1 = $tb_rec->id;
+    //                         $val2 = '';
+    //                     } 
+    //                     else{
+    //                         $name = $tb_rec->name ;
+    //                         $val1 = $args['business_id'];
+    //                         $val2 = $tb_rec->id;
+    //                     }
                         
-                        $div.='<tr>'.
-                                '<td>'.$tb_rec->id.'</td>'.
-                                '<td>'.$name.'</td>'.
-                                '<td>'.
+    //                     $div.='<tr>'.
+    //                             '<td>'.$tb_rec->id.'</td>'.
+    //                             '<td>'.$name.'</td>'.
+    //                             '<td>'.
                                     
-                                    Helper::modifyButton( 
-                                        ['edit' => $args['edit'] , 'destroy' => $args['destroy']] , 
-                                        [ 
-                                            'val1'  => $val1,
-                                            'val2'  => $val2
-                                        ] 
-                                    ).
-                                '</td>
-                            </tr>';
-                    }
-				$div.='</tbody>
-            </table>';
+    //                                 Helper::modifyButton( 
+    //                                     ['edit' => $args['edit'] , 'destroy' => $args['destroy']] , 
+    //                                     [ 
+    //                                         'val1'  => $val1,
+    //                                         'val2'  => $val2
+    //                                     ] 
+    //                                 ).
+    //                             '</td>
+    //                         </tr>';
+    //                 }
+	// 			$div.='</tbody>
+    //         </table>';
                     
-        return $div;
-    }
+    //     return $div;
+    // }
 
     public static function modifyButton( $routeName = [] , $args = [] ){
         $div = '';
@@ -218,5 +241,52 @@ public static function wrapHtml($group, $args = []){
         Form::close();
         return $div;
     } //modifyButton() ends here
+
+    public static function tableBase( $args = [] ){
+        $div = '';
+        $div .= '<table id="myTable" class="display">';
+        if (isset($args['head'])) {
+            $div .= '<thead>
+                        <tr>';
+                            foreach($args['head'] as $heading){
+                                $div .= '<th>'.$heading.'</th>';
+                            }
+                        $div .= '</tr>
+                    </thead>';
+        }
+        if (isset($args['body'])) {
+            $div .= '<tbody>';
+            foreach ( $args['body'] as $body ){
+                $div .= '<tr>';
+                foreach($body as $val ){
+                    $div.='<td>'.$val.'</td>';
+                }
+                $div.='</tr>';
+            }
+        }
+        if (isset($args['foot'])) {
+            $div .= '<tfoot>
+                        <tr>';
+                            foreach($args['foot'] as $heading){
+                                $div .= '<th>'.$heading.'</th>';
+                            }
+                        $div .= '</tr>
+                    </tfoot>';
+        }
+        $div .= '</table>';
+        return $div;
+    } //baseTable() ends here
+
+    public static function editBtn($args = []){
+        return '<a href="'.$args['link'].'" class="btn btn-success">'.
+            '<i class="fa fa-pencil" aria-hidden="true"></i>'.
+        '</a>';
+    }//editBtn() ends 
+
+    public static function destroyBtn( $args = [] ){
+        return Form::open([ 'url' => $args['link'] , 'method' => 'DELETE']).
+            Form::button('<i class="fa fa-trash-o"></i>',['class' => 'btn btn-danger', 'type' => 'submit']).
+        Form::close();
+    }
 
 }

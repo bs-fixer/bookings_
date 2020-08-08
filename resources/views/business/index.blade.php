@@ -43,12 +43,23 @@
 				</tbody>
 			</table> -->
 
-			{!! Helper::table([
-								'th' 		    => ['serial No.' , 'Name', 'Modify'],
-								'for'			=> 'business',
-								'tbody_record'  => $business_list,
-								'edit'			=> 'business.edit',
-								'destroy'		=> 'business.destroy',
+
+			@php
+			$data = [];
+			foreach($business_list as $bl){
+				$data[] = [
+					$bl->id,
+					$bl->title,
+					Helper::editBtn(['link'=> route('business.edit' , [$bl->id ] ) ]).
+					Helper::destroyBtn(['link'=> route('business.destroy' , [$bl->id ] ) ]),
+				];
+			}
+			
+			@endphp
+			
+			{!! Helper::tableBase([
+						'head' 	=> ['serial No', 'Name', 'Modify'],
+						'body' => $data,
 			]) !!}
 			
 		</div>

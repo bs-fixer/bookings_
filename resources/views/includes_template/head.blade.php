@@ -1,7 +1,7 @@
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
 	<title>DeskApp Dashboard</title>
-
+	
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/vendors/images/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="{{ url('/') }}/vendors/images/favicon-32x32.png">
@@ -18,11 +18,11 @@
 
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
 
 	  gtag('config', 'UA-119386393-1');
-	</script>
+	</script> -->

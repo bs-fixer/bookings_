@@ -15,7 +15,8 @@
 			
 			{!! Helper::wrapHtml('text_field', ['name'=>'title', 'label'=>'Title', 'value'=>'' ]) !!}
 			{!! Helper::wrapHtml('textarea_field', ['name'=>'description', 'label'=>'Description', 'value'=>'' ]) !!}
-
+			<!-- {!! Helper::wrapHtml('number_field', ['name'=>'slot', 'label'=>'Slot Duration', 'value'=> 1 ]) !!} -->
+			{!! Helper::wrapHtml('select_field', ['name'=>'slot', 'label'=>'Slot Duration', 'values'=> $time_slot, 'selected_value' => null, 'multiple' => 'false' ]) !!}
 			@foreach($days as $key => $day)
 				<div class="form-group dayName" data-day = "{{ $day }}">
 					<div class="row">

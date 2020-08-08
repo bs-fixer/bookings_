@@ -3,14 +3,22 @@
 @section('content')
 	<div class="form_wrapper">
 	
-
-			{!! Helper::table([
-								'th' 		    => ['serial No.' , 'Name', 'Modify'],
-								'for'			=> 'service',
-								'tbody_record'  => $services,
-								'business_id'	=> $business_id,
-								'edit'			=> 'business.service.edit',
-								'destroy'		=> 'business.service.destroy'
+			
+			@php
+			$data = [];
+			foreach($services as $service){
+				$data[] = [
+					$service->id,
+					$service->name,
+					Helper::editBtn(['link'=> route('business.service.edit' , [$business_id , $service->id ] ) ]).
+					Helper::destroyBtn(['link'=> route('business.service.destroy' , [$business_id , $service->id ] ) ]),
+				];
+			}
+			@endphp
+			
+			{!! Helper::tableBase([
+						'head' 	=> ['serial No', 'Name', 'Modify'],
+						'body' => $data,
 			]) !!}
 	</div>
 @endsection

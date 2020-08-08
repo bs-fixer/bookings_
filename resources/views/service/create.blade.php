@@ -16,7 +16,6 @@
 					{{ Form::text('name', '', ['placeholder' => 'Enter Service Name','class' => 'form-control']) }}
 				</div>
 			</div>	
-			
 			{!! Helper::wrapHtml('button_field', ['name'=>'Add Service']) !!}	
 		{!! Form::close() !!}
 	</div>

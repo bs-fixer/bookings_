@@ -5,7 +5,8 @@ use App\Business;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-
+use App\LastId;
+use App\Meta;
 
 class BusinessController extends Controller
 {
@@ -16,9 +17,9 @@ class BusinessController extends Controller
     }
 
     public function create(){
-        
-        $days = ['default','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        return view('business.create', [ 'days' => $days]);
+        $time_slot = ['15' => 15, '30' => 30, '45' => 45, '60' => 60 ];
+        $days      = ['default','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        return view('business.create', [ 'days' => $days, 'time_slot' => $time_slot]);
     }
 
     public function show(){
@@ -27,7 +28,6 @@ class BusinessController extends Controller
 
 
     public function store(){	
-        
         $validate = request()->validate(
             [
                 'title'        => 'required|min:8',
@@ -55,17 +55,36 @@ class BusinessController extends Controller
         $validate['working_hours'] = $keeper;
         $obj  = new Business($validate);
         $obj->save();
+        /* To save meta record */
+        $metaObj = new Meta();
+        $metaObj->ref_id = $obj->id;
+        $metaObj->ref_name = 'Business';
+        $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        $metaObj->save();
+        /* end to save meta record */
     	Session::flash('message', 'Successfully Added..!'); 
 		Session::flash('alert-class', 'alert-success'); 
     	return redirect()->route('business.index');
     }
 
     public function edit($business_id){
+              
         $business      = Business::find($business_id);
         $services      = $business->services->pluck('id')->toArray();
         $days          = ['default' , 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
         $working_hours = $business['working_hours'];
-        return view('business.edit', [ 'business' => $business , 'services' => $services , 'days' => $days , 'working_hours' => $working_hours]);
+        /* to get slot value */
+        $time_slot     = ['15' => 15, '30' => 30, '45' => 45, '60' => 60 ];
+        $slot = Business::getSlotDetail($business_id , 'Business' );
+        /* end to get slot value */
+        return view('business.edit', [ 
+                                        'business'      => $business , 
+                                        'services'      => $services , 
+                                        'days'          => $days , 
+                                        'working_hours' => $working_hours , 'slot' => $slot,
+                                        'time_slot'     => $time_slot,
+                                        'slot'          => $slot
+                                    ]);
     } //edit() ends
 
     public function update($id){
@@ -91,7 +110,11 @@ class BusinessController extends Controller
         }
         $validate['working_hours'] = $keeper;
         $business->update($validate);
-
+        /* to update slot */
+        $metaObj = Meta::where(['ref_id'=>$id, 'ref_name' => 'Business'])->first();
+        $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        $metaObj->update();
+        /* end to update slot */
         Session::flash('message', 'Successfully Updated..!'); 
         Session::flash('alert-class', 'alert-success'); 
         return redirect()->route('business.index');

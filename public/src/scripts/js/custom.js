@@ -89,3 +89,23 @@ jQuery(document).ready( function () {
 jQuery(document).ready( function () {
     jQuery('.myTable').DataTable();
 } );
+
+
+jQuery(document).ready(function(){
+	setTimeout(function(){
+		var disabledDates = ["2020-08-28","2020-08-14","2020-08-21"];
+		jQuery('#dob').datepicker({
+			format:"yyyy/mm/dd",
+			language: "en",
+			// // datesDisabled: ['12','13','14','15','16','17','18'],
+			// beforeShowDay: function(date){
+			// 	var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+			// 	return [ disabledDates.indexOf(string) == -1 ]
+			// }
+			// daysOfWeekDisabled: "3,4",
+			daysOfWeekDisabled: [1,2,3,4,5,6],
+			
+		}); 
+	},100);
+	
+});
