@@ -2,9 +2,9 @@
 	<meta charset="utf-8">
 	<title>DeskApp Dashboard</title>
 	
-	<!-- <script src="{{ url('/') }}/src/scripts/js/jquery.min.js"></script>
+	<script src="{{ url('/') }}/src/scripts/js/jquery.min.js"></script>
 	<script src="{{ url('/') }}/src/scripts/js/bootstrap-datepicker.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/src/styles/bootstrap-datepicker.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/src/styles/bootstrap-datepicker.min.css">
 
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/vendors/images/apple-touch-icon.png">

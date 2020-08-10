@@ -27,7 +27,7 @@ class BookingsController extends Controller
                             ->employees
                             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
                             ->pluck('name','id');
-
+        
         $services = Business::find($business_id)
                             ->services
                             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
