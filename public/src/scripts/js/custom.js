@@ -1,3 +1,46 @@
+jQuery(document).ready(function(){
+	var disabledDays = ["12-24-2013", "12-25-2013", "12-26-2013", "12-31-2013", "1-1-2014"]
+
+	function noHolidays(date) {
+		return [!disableSpecificWeekDays(date) && !nationalDays(date)];
+	}
+
+	function nationalDays(date) {
+		var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+		for (i = 0; i < disabledDays.length; i++) {
+			if ($.inArray((m + 1) + '-' + d + '-' + y, disabledDays) != -1 || new Date() > date) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function disableSpecificWeekDays(date) {
+		var daysToDisable = blockDays;
+		var day = date.getDay();
+
+		for (i = 0; i < daysToDisable.length; i++) {
+			if ($.inArray(day, daysToDisable) != -1) {
+				return [false];
+			}
+		}
+		return [true];
+	}
+
+	jQuery('#dob').datepicker({
+		beforeShowDay: function(){
+			return false;
+		},
+	}); 
+	// setTimeout(function(){
+	// 	console.log('hello');
+	// 	var disabledDates = ["2020-08-28","2020-08-14","2020-08-21"];
+	// 	jQuery('#dob').datepicker(); 
+	// 	console.log('world');
+	// },100);
+	
+});
+
 // jQuery(document).ready(function(){
 // 	// for default days and hours repeater
 // 	jQuery('#default_add').on('click', function(){
@@ -91,21 +134,4 @@ jQuery(document).ready( function () {
 } );
 
 
-jQuery(document).ready(function(){
-	setTimeout(function(){
-		var disabledDates = ["2020-08-28","2020-08-14","2020-08-21"];
-		jQuery('#dob').datepicker({
-			format:"yyyy/mm/dd",
-			language: "en",
-			// // datesDisabled: ['12','13','14','15','16','17','18'],
-			// beforeShowDay: function(date){
-			// 	var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-			// 	return [ disabledDates.indexOf(string) == -1 ]
-			// }
-			// daysOfWeekDisabled: "3,4",
-			daysOfWeekDisabled: [1,2,3,4,5,6],
-			
-		}); 
-	},100);
-	
-});
+

@@ -9541,7 +9541,7 @@ rangy.createModule("DomUtil", function(api, module) {
             r1.setStart(textNode, 0);
             r2.setEnd(textNode, 2);
             sel.addRange(r1);
-            sel.addRange(r2);
+            // sel.addRange(r2);
 
             selectionSupportsMultipleRanges = (sel.rangeCount == 2);
 
@@ -17007,11 +17007,11 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
         defaults = {
             classes: '',
             inline: false,
-            language: 'ru',
+            language: 'en',
             startDate: new Date(),
             firstDay: '',
             weekends: [6, 0],
-            dateFormat: '',
+            dateFormat: 'yyyy-mm-dd',
             altField: '',
             altFieldDateFormat: '@',
             toggleSelected: true,
