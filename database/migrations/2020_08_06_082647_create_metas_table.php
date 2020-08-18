@@ -17,7 +17,8 @@ class CreateMetasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('ref_id');
             $table->string('ref_name');
-            $table->text('meta_details');
+            $table->text('key');
+            $table->text('value');
             $table->timestamps();
         });
     }

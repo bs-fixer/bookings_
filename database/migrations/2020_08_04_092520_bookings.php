@@ -18,7 +18,9 @@ class Bookings extends Migration
             $table->unsignedBigInteger('business_id');
             $table->unsignedBigInteger('ref_id');
             $table->string('ref_name');
-            $table->text('booking_details');
+            $table->text('details');
+            $table->text('date');
+            $table->text('slot');
             $table->timestamps();
 
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');

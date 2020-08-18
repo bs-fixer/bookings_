@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 use App\Business;
 use App\Booking;
+use App\Meta;
 use Session;
 use Illuminate\Http\Request;
 
 class BookingsController extends Controller
 {
+    /* Bookings STRUCTRUR */
+    //details instead of booking_details
+    //date
+    //slot
+
+    /* META TABLE STRUCTRE */
+    //add 2 fields 'key', 'value' instead of meta_details.
+
     public function index($business_id){
         $booking  = Booking::all();
         $name = [];
@@ -23,6 +32,7 @@ class BookingsController extends Controller
     }
 
     public function create( $business_id ){
+        
         $employees = Business::find($business_id)
                             ->employees
                             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
@@ -32,6 +42,8 @@ class BookingsController extends Controller
                             ->services
                             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
                             ->pluck('name', 'id');
+        $working_days = Business::find($business_id)->employees->pluck('working_hours');
+        // return $working_days;
         // $bookings = new Booking();
         // $employees= $bookings->getAllEmployees();
         // $services = $bookings->getAllServices();
@@ -39,9 +51,26 @@ class BookingsController extends Controller
     } //create() ends
 
     public function store($business_id){
+        
+        $slot       = Meta::where(['ref_id' => request('ref_id'), 'ref_name' => 'Employee'])->pluck('value')->first();
+        $slot_index = request('slot_index');
+        
         $obj  = new Booking(request(['business_id','ref_id']));
+        // $obj->ref_name = 'Employee';
+        // $obj->booking_details = json_encode(['services' => request()->services]);
+        // $obj->save();
+        $obj->business_id = request('business_id');
+        $obj->ref_id   = request('ref_id');
         $obj->ref_name = 'Employee';
-        $obj->booking_details = json_encode(['services' => request()->services]);
+        $obj->details  = json_encode([
+                                        'services' => request()->services , 
+                                        'slot' => $slot, 
+                                        'name' => request('name'),
+                                        'email'=> request('email'),
+                                        'contact' => request('contact')
+                                    ]);
+        $obj->date     = request('dob');
+        $obj->slot     = $slot_index;
         $obj->save();
 
     	Session::flash('message', 'Successfully Added..!'); 

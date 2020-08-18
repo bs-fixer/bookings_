@@ -27,7 +27,8 @@ class BusinessController extends Controller
     }
 
 
-    public function store(){	
+    public function store(){
+        
         $validate = request()->validate(
             [
                 'title'        => 'required|min:8',
@@ -59,7 +60,9 @@ class BusinessController extends Controller
         $metaObj = new Meta();
         $metaObj->ref_id = $obj->id;
         $metaObj->ref_name = 'Business';
-        $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        // $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        $metaObj->key   = 'slot';
+        $metaObj->value = request('slot');
         $metaObj->save();
         /* end to save meta record */
     	Session::flash('message', 'Successfully Added..!'); 
@@ -112,7 +115,8 @@ class BusinessController extends Controller
         $business->update($validate);
         /* to update slot */
         $metaObj = Meta::where(['ref_id'=>$id, 'ref_name' => 'Business'])->first();
-        $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        // $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        $metaObj->value = request('slot');
         $metaObj->update();
         /* end to update slot */
         Session::flash('message', 'Successfully Updated..!'); 

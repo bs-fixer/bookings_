@@ -33,6 +33,7 @@ class EmployeeController extends Controller
     }
 
     public function store(Request $request){
+
     	$obj = new Employee(request(['business_id','name', 'working_days' , 'working_hours']));
     	$obj->save();
         $obj->services()->attach( request()->services );
@@ -41,7 +42,9 @@ class EmployeeController extends Controller
          $metaObj = new Meta();
          $metaObj->ref_id = $obj->id;
          $metaObj->ref_name = 'Employee';
-         $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        //  $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        $metaObj->key = 'slot';
+        $metaObj->value = request('slot');
          $metaObj->save();
          /* end to save meta record */
 
@@ -92,7 +95,9 @@ class EmployeeController extends Controller
         $emp->services()->sync(request('services',[]));
         /* to update slot */
         $metaObj = Meta::where(['ref_id'=>$employee_id, 'ref_name' => 'Employee'])->first();
-        $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        // $metaObj->meta_details = json_encode(['slot' => request('slot')]);
+        $metaObj->key   = 'slot';
+        $metaObj->value = request('slot');
         $metaObj->update();
         /* end to update slot */
         

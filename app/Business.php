@@ -29,11 +29,13 @@ class Business extends Model
 	public static function getSlotDetail( $ref_id , $ref_name ){
 		$metaDetail    = Meta::where(['ref_id' => $ref_id, 'ref_name' => $ref_name ])->get();
         foreach($metaDetail as $key => $val){
-            $slot = $val->meta_details;
-            $sl = json_decode($slot);
-            $sl = $sl->slot;
+			// $slot = $val->meta_details;
+			$slot = $val->value;
+            // $sl = json_decode($slot);
+            // $sl = $sl->slot;
         }
-        return $sl;
+		// return $sl;
+		return $slot;
 	}
 
 }

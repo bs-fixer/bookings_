@@ -108,6 +108,16 @@ public static function wrapHtml($group, $args = []){
                 </div>';
         break;
 
+        case 'email_field':
+            return '<div class="form-group row">'.
+                    Form::label($args['name'],$args['label'],['class' => 'col-sm-12 col-md-2 col-form-label']).
+                    '<div class="col-sm-12 col-md-10">'.
+                        Form::email($args['name'], $args['value'] , $args['attributes']).
+                    '</div>
+                </div>';
+            
+        break;
+
         case 'datepicker_field':
             return '<div class="form-group row">'.
                         Form::label($args['name'],$args['label'],['class' => 'col-sm-12 col-md-2 col-form-label']).
@@ -146,7 +156,13 @@ public static function wrapHtml($group, $args = []){
 
         case 'button_field':
             return '<div class="form-group row">'.
-                        Form::button($args['name'],['type'=>'submit','class' => 'btn btn-primary'] ).
+                        Form::button($args['value'],$args['attributes'] ).
+                    '</div>';
+        break;
+
+        case 'submit_button':
+            return '<div class="form-group row">'.
+                        Form::button($args['name'],$args['attributes'] ).
                     '</div>';
         break;
 
@@ -287,6 +303,11 @@ public static function wrapHtml($group, $args = []){
         return Form::open([ 'url' => $args['link'] , 'method' => 'DELETE']).
             Form::button('<i class="fa fa-trash-o"></i>',['class' => 'btn btn-danger', 'type' => 'submit']).
         Form::close();
+    }
+
+    public static function seconds_from_time($time) {
+        $fromList       = explode(':', $from);
+        return (($fromList[0] * 3600) + ($fromList[1] * 60));
     }
 
 }

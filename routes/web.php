@@ -39,3 +39,12 @@ Route::get('/business/{business_id}/employee/{employee_id}/edit', 'EmployeeContr
 		->name('employee.edit');
 Route::put('/business/{business_id}/employee/{employee_id}' , 'EmployeeController@update')->name('employee.update');
 Route::delete('/business/{business_id}/employee/{employee_id}', 'EmployeeController@destroy')->name('employee.destroy');
+
+/* AJAX REQUESTS HANDLING */
+Route::get('ajax_getEmpWorkingDays', 'AjaxController@getWorkingDays');
+Route::get('ajax_getSlotsHtml', 'AjaxController@getSlotsHtml');
+
+/* CUSTOM CONTROLLERS */
+Route::get('business/{business_id}/booking' , 'FrontendBookingController@create');
+// Route::post('business/{business_id}/booking/create' , 'FrontendBookingController@store')->name('frontendbooking');
+Route::get('business/{business_id}/booking/create' , 'FrontendBookingController@store')->name('frontendbooking');
